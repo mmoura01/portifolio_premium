@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Solutions Architect | Secure & Scalable AI</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/logo.png">
+
+    <!-- Tags Meta Principais -->
+    <meta name="title" content="Global Solutions Architect | Secure & Scalable AI">
+    <meta name="description"
+        content="Global Solutions Architect especializado em software seguro e escalável construído com IA. Expertise em conformidade com GDPR, LGPD e CCPA.">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yourportfolio.vercel.app/">
+    <meta property="og:title" content="Global Solutions Architect | Secure & Scalable AI">
+    <meta property="og:description"
+        content="Global Solutions Architect especializado em software seguro e escalável construído com IA. Expertise em conformidade com GDPR, LGPD e CCPA.">
+    <meta property="og:image"
+        content="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070&auto=format&fit=crop">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://yourportfolio.vercel.app/">
+    <meta property="twitter:title" content="Global Solutions Architect | Secure & Scalable AI">
+    <meta property="twitter:description"
+        content="Global Solutions Architect especializado em software seguro e escalável construído com IA. Expertise em conformidade com GDPR, LGPD e CCPA.">
+    <meta property="twitter:image" content="assets/logo.png">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- AOS CSS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Ícones Lucide -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        cyber: {
+                            black: '#050505',
+                            dark: '#0a0a0a',
+                            indigo: '#6366f1',
+                            silver: '#e2e8f0',
+                            accent: '#4f46e5'
+                        }
+                    },
+                    fontFamily: {
+                        inter: ['Inter', 'sans-serif'],
+                    },
+                    animation: {
+                        'glow': 'glow 3s infinite alternate',
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        glow: {
+                            '0%': { boxShadow: '0 0 5px rgba(99, 102, 241, 0.2)' },
+                            '100%': { boxShadow: '0 0 20px rgba(99, 102, 241, 0.6)' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style type="text/tailwindcss">
+        @layer base {
+            body {
+                @apply bg-cyber-black text-silver font-inter overflow-x-hidden;
+            }
+        }
+        @layer components {
+            .glass {
+                @apply bg-white/5 backdrop-blur-lg border border-white/10;
+            }
+            .btn-primary {
+                @apply px-8 py-3 bg-cyber-indigo text-white font-bold rounded-lg transition-all hover:bg-indigo-500 hover:shadow-[0_0_20px_rgba(99,102,241,0.5)] active:scale-95;
+            }
+            .btn-secondary {
+                @apply px-8 py-3 border border-white/20 text-white font-bold rounded-lg transition-all hover:bg-white/10 active:scale-95;
+            }
+            .cyber-card {
+                @apply glass p-8 rounded-2xl transition-all duration-500 hover:border-cyber-indigo/50 hover:bg-white/10;
+            }
+            .gradient-text {
+                @apply bg-clip-text text-transparent bg-gradient-to-r from-cyber-indigo to-indigo-300;
+            }
+        }
+        
+        /* Classes de Alternância de Idioma */
+        [lang-toggle="pt"] .en { display: none; }
+        [lang-toggle="en"] .pt { display: none; }
+    </style>
+</head>
+
+<body lang-toggle="en">
+
+    <!-- Header -->
+    <header class="fixed top-0 w-full z-50 glass border-b border-white/5">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <div class="w-12 h-12 rounded-full border-2 border-cyber-indigo p-0.5 group">
+                    <img src="assets/logo.png" alt="MM Logo"
+                        class="w-full h-full object-cover rounded-full transition-transform duration-500 group-hover:scale-110">
+                </div>
+                <span class="text-xl font-extrabold tracking-tighter text-white">MARCO<span class="text-cyber-indigo">
+                        M.</span></span>
+            </div>
+
+            <nav class="hidden md:flex space-x-8 items-center">
+                <a href="#engine" class="hover:text-cyber-indigo transition-colors en">The Engine</a>
+                <a href="#engine" class="hover:text-cyber-indigo transition-colors pt">O Mecanismo</a>
+                <a href="#services" class="hover:text-cyber-indigo transition-colors en">Services</a>
+                <a href="#services" class="hover:text-cyber-indigo transition-colors pt">Serviços</a>
+                <a href="#compliance" class="hover:text-cyber-indigo transition-colors en">Trust</a>
+                <a href="#compliance" class="hover:text-cyber-indigo transition-colors pt">Confiança</a>
+
+                <div class="flex items-center space-x-2 bg-white/5 p-1 rounded-full border border-white/10">
+                    <button onclick="setLang('en')" id="btn-en"
+                        class="px-3 py-1 rounded-full text-xs font-bold transition-all bg-cyber-indigo text-white">EN</button>
+                    <button onclick="setLang('pt')" id="btn-pt"
+                        class="px-3 py-1 rounded-full text-xs font-bold transition-all text-gray-500 hover:text-white">PT</button>
+                </div>
+            </nav>
+
+            <div class="md:hidden">
+                <i data-lucide="menu" class="text-white"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- Seção Hero -->
+    <section class="relative min-h-screen flex items-center pt-20 overflow-hidden">
+        <!-- Fundo Abstrato -->
+        <div
+            class="absolute top-0 right-0 -z-10 w-[500px] h-[500px] bg-cyber-indigo/20 blur-[120px] rounded-full animate-float">
+        </div>
+        <div class="absolute bottom-0 left-0 -z-10 w-[300px] h-[300px] bg-blue-600/10 blur-[100px] rounded-full"></div>
+
+        <div class="container mx-auto px-6 text-center md:text-left grid md:grid-cols-2 gap-12 items-center">
+            <div data-aos="fade-right">
+                <h1 class="text-5xl md:text-7xl font-extrabold leading-tight mb-6">
+                    <span class="en">Global Scalable <span class="gradient-text">Solutions.</span></span>
+                    <span class="pt">Soluções Globais <span class="gradient-text">Escaláveis.</span></span>
+                </h1>
+                <p class="text-xl text-gray-400 mb-8 max-w-lg">
+                    <span class="en">Built with AI Intelligence. Secured by World-Class Design. Specialized in
+                        International Compliance.</span>
+                    <span class="pt">Construído com Inteligência Artificial. Protegido por Design de Classe Mundial.
+                        Especialista em Compliance Internacional.</span>
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                    <a href="#contact" class="btn-primary">
+                        <span class="en">Deploy My Project</span>
+                        <span class="pt">Implantar meu Projeto</span>
+                    </a>
+                    <a href="#engine" class="btn-secondary">
+                        <span class="en">The Antigravity Engine</span>
+                        <span class="pt">O Mecanismo Antigravity</span>
+                    </a>
+                </div>
+            </div>
+            <div class="relative" data-aos="zoom-in">
+                <div class="cyber-card relative z-10 animate-glow">
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="flex space-x-2">
+                            <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                            <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                            <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                        </div>
+                        <span class="text-xs text-cyber-indigo font-mono">system.security.audit: active</span>
+                    </div>
+                    <pre class="text-sm font-mono text-indigo-300 overflow-x-hidden">
+<code><span class="text-gray-500">// Núcleo de Monitoramento por IA</span>
+[GDPR] Compliance <span class="text-green-400">PASSED</span>
+[LGPD] Privacy <span class="text-green-400">PASSED</span>
+[CCPA] Security <span class="text-green-400">PASSED</span>
+
+<span class="text-cyber-indigo"># Antigravity is watching...</span></code></pre>
+                </div>
+                <!-- Elementos Decorativos -->
+                <div class="absolute -top-10 -right-10 w-32 h-32 border border-white/10 rounded-full animate-spin-slow">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Barra de Confiança / Compliance -->
+    <section id="compliance" class="py-12 bg-white/5 border-y border-white/5">
+        <div class="container mx-auto px-6">
+            <div
+                class="flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-50 grayscale hover:grayscale-0 transition-all duration-700">
+                <div class="flex items-center space-x-2">
+                    <i data-lucide="lock" class="w-6 h-6"></i>
+                    <span class="font-bold">SSL SECURE</span>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <span class="font-bold border px-2 py-0.5 rounded text-xs border-white/20">GDPR</span>
+                    <span class="en text-xs">COMPLIANT</span>
+                    <span class="pt text-xs">CONFORME</span>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <span class="font-bold border px-2 py-0.5 rounded text-xs border-white/20">LGPD</span>
+                    <span class="en text-xs">VERIFIED</span>
+                    <span class="pt text-xs">VERIFICADO</span>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <span class="font-bold border px-2 py-0.5 rounded text-xs border-white/20">OWASP</span>
+                    <span class="en text-xs">TOP 10 READY</span>
+                    <span class="pt text-xs">TOP 10 PRONTO</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- O Mecanismo Antigravity -->
+    <section id="engine" class="py-24 relative">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-4xl font-bold mb-4">
+                    <span class="en">The <span class="gradient-text">Antigravity Engine</span></span>
+                    <span class="pt">O <span class="gradient-text">Mecanismo Antigravity</span></span>
+                </h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">
+                    <span class="en">How our proprietary AI-Integrated workflow creates indestructible software
+                        architectures.</span>
+                    <span class="pt">Como nosso fluxo de trabalho proprietário integrado à IA cria arquiteturas de
+                        software indestrutíveis.</span>
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="cyber-card group" data-aos="fade-up" data-aos-delay="100">
+                    <div
+                        class="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center mb-6 group-hover:bg-cyber-indigo/20 transition-colors">
+                        <i data-lucide="activity" class="text-cyber-indigo"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">
+                        <span class="en">Real-time Security Auditing</span>
+                        <span class="pt">Auditoria de Segurança em Tempo Real</span>
+                    </h3>
+                    <p class="text-gray-400">
+                        <span class="en">Our AI skills scan every line of code for vulnerabilities before deployment,
+                            ensuring OWASP standards.</span>
+                        <span class="pt">Nossas habilidades de IA escaneiam cada linha de código em busca de
+                            vulnerabilidades antes da implantação.</span>
+                    </p>
+                </div>
+                <div class="cyber-card group" data-aos="fade-up" data-aos-delay="200">
+                    <div
+                        class="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center mb-6 group-hover:bg-cyber-indigo/20 transition-colors">
+                        <i data-lucide="file-text" class="text-cyber-indigo"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">
+                        <span class="en">Automated Documentation</span>
+                        <span class="pt">Documentação Automática</span>
+                    </h3>
+                    <p class="text-gray-400">
+                        <span class="en">Comprehensive technical documentation generated instantly for enterprise-level
+                            handover and maintenance.</span>
+                        <span class="pt">Documentação técnica abrangente gerada instantaneamente para entrega e
+                            manutenção em nível empresarial.</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Catálogo de Serviços -->
+    <section id="services" class="py-24 bg-cyber-dark">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Landing Pages de Alta Conversão -->
+                <div class="p-1 rounded-2xl bg-gradient-to-b from-white/10 to-transparent" data-aos="fade-up">
+                    <div
+                        class="bg-cyber-black p-8 rounded-2xl h-full border border-white/5 hover:border-cyber-indigo/30 transition-all">
+                        <h4 class="text-cyber-indigo font-bold mb-2">01</h4>
+                        <h3 class="text-2xl font-bold mb-4">
+                            <span class="en">High-Conversion Landing Pages</span>
+                            <span class="pt">Landing Pages de Alta Conversão</span>
+                        </h3>
+                        <p class="text-gray-400 mb-6">
+                            <span class="en">Designed for sales. Optimized for speed. Built to rank globally.</span>
+                            <span class="pt">Projetadas para vendas. Otimizadas para velocidade. Feitas para ranquear
+                                globalmente.</span>
+                        </p>
+                        <ul class="space-y-3 mb-8 text-sm">
+                            <li class="flex items-center space-x-2"><i data-lucide="check"
+                                    class="w-4 h-4 text-green-500"></i> <span class="en">Ultra-fast CDN
+                                    Delivery</span><span class="pt">Entrega CDN Ultra-rápida</span></li>
+                            <li class="flex items-center space-x-2"><i data-lucide="check"
+                                    class="w-4 h-4 text-green-500"></i> <span class="en">Dynamic Animations</span><span
+                                    class="pt">Animações Dinâmicas</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Custom Enterprise Software -->
+                <div class="p-1 rounded-2xl bg-gradient-to-b from-cyber-indigo/50 to-transparent" data-aos="fade-up"
+                    data-aos-delay="100">
+                    <div
+                        class="bg-cyber-black p-8 rounded-2xl h-full border border-cyber-indigo/20 shadow-[0_0_30px_rgba(99,102,241,0.1)]">
+                        <h4 class="text-cyber-indigo font-bold mb-2">02</h4>
+                        <h3 class="text-2xl font-bold mb-4">
+                            <span class="en">Custom Enterprise SaaS</span>
+                            <span class="pt">SaaS Empresarial Sob Medida</span>
+                        </h3>
+                        <p class="text-gray-400 mb-6">
+                            <span class="en">Robust architectures for complex enterprise requirements and global
+                                scale.</span>
+                            <span class="pt">Arquiteturas robustas para requisitos complexos e escala global.</span>
+                        </p>
+                        <ul class="space-y-3 mb-8 text-sm">
+                            <li class="flex items-center space-x-2"><i data-lucide="check"
+                                    class="w-4 h-4 text-green-500"></i> <span class="en">GDPR/LGPD Compliant</span><span
+                                    class="pt">Conformidade GDPR/LGPD</span></li>
+                            <li class="flex items-center space-x-2"><i data-lucide="check"
+                                    class="w-4 h-4 text-green-500"></i> <span class="en">Microservices
+                                    Structure</span><span class="pt">Estrutura de Microserviços</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- AI Agents -->
+                <div class="p-1 rounded-2xl bg-gradient-to-b from-white/10 to-transparent" data-aos="fade-up"
+                    data-aos-delay="200">
+                    <div
+                        class="bg-cyber-black p-8 rounded-2xl h-full border border-white/5 hover:border-cyber-indigo/30 transition-all">
+                        <h4 class="text-cyber-indigo font-bold mb-2">03</h4>
+                        <h3 class="text-2xl font-bold mb-4">
+                            <span class="en">AI Agents for Automation</span>
+                            <span class="pt">Agentes de IA para Automação</span>
+                        </h3>
+                        <p class="text-gray-400 mb-6">
+                            <span class="en">Increase productivity by 10x with custom AI workflows integrated into your
+                                ops.</span>
+                            <span class="pt">Aumente a produtividade em 10x com fluxos de IA personalizados.</span>
+                        </p>
+                        <ul class="space-y-3 mb-8 text-sm">
+                            <li class="flex items-center space-x-2"><i data-lucide="check"
+                                    class="w-4 h-4 text-green-500"></i> <span class="en">24/7 Automated
+                                    Tasks</span><span class="pt">Tarefas Automatizadas 24/7</span></li>
+                            <li class="flex items-center space-x-2"><i data-lucide="check"
+                                    class="w-4 h-4 text-green-500"></i> <span class="en">LLM Integration</span><span
+                                    class="pt">Integração com LLM</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="py-24 border-t border-white/5 relative overflow-hidden">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-4xl font-bold mb-8" data-aos="fade-up">
+                <span class="en">Ready to <span class="gradient-text">Go Global?</span></span>
+                <span class="pt">Pronto para ser <span class="gradient-text">Global?</span></span>
+            </h2>
+
+            <div class="flex flex-col items-center space-y-6" data-aos="fade-up" data-aos-delay="100">
+                <!-- INSIRA SEU NÚMERO DE WHATSAPP INTERNACIONAL ABAIXO -->
+                <!-- Exemplo: https://wa.me/5511999999999 -->
+                <a href="https://wa.me/5592993426359" target="_blank"
+                    class="flex items-center space-x-4 bg-[#25D366] text-white px-8 py-4 rounded-full font-bold hover:scale-105 transition-transform">
+                    <i data-lucide="message-circle" class="w-6 h-6"></i>
+                    <span class="en">Contact via WhatsApp</span>
+                    <span class="pt">Contato via WhatsApp</span>
+                </a>
+
+                <p class="text-gray-500 text-sm">
+                    &copy; 2026 Antigravity Architectures. All Rights Reserved.
+                </p>
+            </div>
+        </div>
+
+        <div
+            class="absolute -bottom-24 left-1/2 -translate-x-1/2 w-full h-48 bg-cyber-indigo/10 blur-[100px] rounded-full">
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Inicializar AOS
+        AOS.init({
+            duration: 1000,
+            once: true,
+            easing: 'ease-out-cubic'
+        });
+
+        // Inicializar Ícones Lucide
+        lucide.createIcons();
+
+        // Lógica de Alternância de Idioma
+        function setLang(lang) {
+            document.body.setAttribute('lang-toggle', lang);
+
+            // Alternar Botões da UI
+            const btnEn = document.getElementById('btn-en');
+            const btnPt = document.getElementById('btn-pt');
+
+            if (lang === 'en') {
+                btnEn.classList.add('bg-cyber-indigo', 'text-white');
+                btnEn.classList.remove('text-gray-500');
+                btnPt.classList.remove('bg-cyber-indigo', 'text-white');
+                btnPt.classList.add('text-gray-500');
+            } else {
+                btnPt.classList.add('bg-cyber-indigo', 'text-white');
+                btnPt.classList.remove('text-gray-500');
+                btnEn.classList.remove('bg-cyber-indigo', 'text-white');
+                btnEn.classList.add('text-gray-500');
+            }
+        }
+    </script>
+</body>
+
+</html>
