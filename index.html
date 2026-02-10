@@ -962,6 +962,20 @@
                 btnPt.classList.add('active');
                 btnEn.classList.remove('active');
             }
+
+            // Traduzir mensagens existentes do bot
+            document.querySelectorAll('.message.bot[data-msg-key]').forEach(msg => {
+                const key = msg.getAttribute('data-msg-key');
+                if (botMessages[lang][key]) {
+                    msg.innerText = botMessages[lang][key];
+                }
+            });
+
+            // Traduzir link do WhatsApp no chat
+            const waLink = document.querySelector('#chat-messages a');
+            if (waLink) {
+                waLink.innerText = (lang === 'en') ? "Schedule on WhatsApp" : "Agendar no WhatsApp";
+            }
         }
 
         // --- Chat Bot Logic (Expert Edition) ---
@@ -1017,12 +1031,13 @@
             return 'general';
         }
 
-        function addMessage(text, side) {
+        function addMessage(text, side, key = null) {
             const chatMessages = document.getElementById('chat-messages');
             if (!chatMessages) return;
             const div = document.createElement('div');
             div.className = `message ${side}`;
             div.innerText = text;
+            if (key) div.setAttribute('data-msg-key', key);
             chatMessages.appendChild(div);
             chatMessages.scrollTop = chatMessages.scrollHeight;
         }
@@ -1034,7 +1049,7 @@
 
             win.classList.toggle('active');
             if (win.classList.contains('active') && msgs.children.length === 0) {
-                setTimeout(() => addMessage(botMessages[getLang()].welcome, 'bot'), 500);
+                setTimeout(() => addMessage(botMessages[getLang()].welcome, 'bot', 'welcome'), 500);
             }
         }
 
@@ -1072,17 +1087,17 @@
                 detectedService = detectService(val);
                 chatStep++;
                 setTimeout(() => {
-                    addMessage(botMessages[lang][detectedService], 'bot');
+                    addMessage(botMessages[lang][detectedService], 'bot', detectedService);
                 }, 1000);
             } else if (chatStep === 1) {
                 chatStep++;
                 setTimeout(() => {
-                    addMessage(botMessages[lang].region, 'bot');
+                    addMessage(botMessages[lang].region, 'bot', 'region');
                 }, 1000);
             } else if (chatStep === 2) {
                 chatStep++;
                 setTimeout(() => {
-                    addMessage(botMessages[lang].closing, 'bot');
+                    addMessage(botMessages[lang].closing, 'bot', 'closing');
                     const chatMessages = document.getElementById('chat-messages');
                     const waLink = document.createElement('a');
                     waLink.href = "https://wa.me/5592993426359";
