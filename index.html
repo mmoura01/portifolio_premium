@@ -79,6 +79,28 @@
         }
     </script>
 
+    <!-- Estilos de Resgate (Funcionam sem Tailwind) -->
+    <style>
+        body {
+            background-color: #050505;
+            color: #e2e8f0;
+        }
+
+        [lang-toggle="pt"] .en {
+            display: none !important;
+        }
+
+        [lang-toggle="en"] .pt {
+            display: none !important;
+        }
+
+        .logo-img {
+            max-width: 48px;
+            max-height: 48px;
+            border-radius: 9999px;
+        }
+    </style>
+
     <style type="text/tailwindcss">
         @layer base {
             body {
@@ -102,10 +124,6 @@
                 @apply bg-clip-text text-transparent bg-gradient-to-r from-cyber-indigo to-indigo-300;
             }
         }
-        
-        /* Classes de Alternância de Idioma */
-        [lang-toggle="pt"] .en { display: none; }
-        [lang-toggle="en"] .pt { display: none; }
     </style>
 </head>
 
@@ -117,9 +135,10 @@
             <div class="flex items-center space-x-3">
                 <div class="w-12 h-12 rounded-full border-2 border-cyber-indigo p-0.5 group">
                     <img src="assets/logo.png" alt="MM Logo"
-                        class="w-full h-full object-cover rounded-full transition-transform duration-500 group-hover:scale-110">
+                        class="logo-img w-full h-full object-cover rounded-full transition-transform duration-500 group-hover:scale-110">
                 </div>
-                <span class="text-xl font-extrabold tracking-tighter text-white">MARCO<span class="text-cyber-indigo">
+                <span class="text-xl font-extrabold tracking-tighter text-white whitespace-nowrap">MARCO<span
+                        class="text-cyber-indigo">
                         M.</span></span>
             </div>
 
