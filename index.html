@@ -437,7 +437,7 @@
             position: fixed;
             bottom: 2rem;
             right: 2rem;
-            z-index: 1000;
+            z-index: 9999;
             font-family: 'Inter', sans-serif;
         }
 
@@ -563,6 +563,15 @@
             align-items: center;
             justify-content: center;
         }
+
+        #chat-send:hover {
+            transform: scale(1.1);
+            background: #4f46e5;
+        }
+
+        #chat-send:active {
+            transform: scale(0.9);
+        }
     </style>
 </head>
 
@@ -621,10 +630,10 @@
                         Especialista em Compliance Internacional.</span>
                 </p>
                 <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-                    <a href="javascript:void(0)" onclick="openChat()" class="btn-primary">
+                    <button onclick="openChat()" class="btn-primary">
                         <span class="en">Deploy My Project</span>
                         <span class="pt">Implantar meu Projeto</span>
-                    </a>
+                    </button>
                     <a href="#engine" class="btn-secondary">
                         <span class="en">The Antigravity Engine</span>
                         <span class="pt">O Mecanismo Antigravity</span>
@@ -951,83 +960,85 @@
         }
 
         // --- Chat Bot Logic ---
-        const chatBtn = document.getElementById('chat-button');
-        const chatWindow = document.getElementById('chat-window');
-        const chatMessages = document.getElementById('chat-messages');
-        const chatSend = document.getElementById('chat-send');
-        let chatStep = 0;
+        document.addEventListener('DOMContentLoaded', () => {
+            const chatBtn = document.getElementById('chat-button');
+            const chatWindow = document.getElementById('chat-window');
+            const chatMessages = document.getElementById('chat-messages');
+            const chatSend = document.getElementById('chat-send');
+            const chatInput = document.getElementById('chat-input');
+            let chatStep = 0;
 
-        const botMessages = {
-            en: [
-                "Hello! I am Marcos' AI Expert Assistant. What project idea do you have in mind?",
-                "Interesting... Who is the target audience for this project?",
-                "Understood. And which country or region will this operate in?",
-                "Great! Based on this, I suggest we schedule a quick call with Marcos to finalize the strategy. You can reach him directly via WhatsApp below!"
-            ],
-            pt: [
-                "Olá! Sou o Assistente Especialista do Marcos. Qual ideia de projeto você tem em mente?",
-                "Interessante... Qual é o público-alvo deste projeto?",
-                "Entendido. E em qual país ou região isso irá operar?",
-                "Excelente! Com base nisso, sugiro agendarmos uma reunião rápida com o Marcos para fechar a estratégia. Você pode falar com ele agora pelo WhatsApp agora!"
-            ]
-        };
+            const botMessages = {
+                en: [
+                    "Hello! I am Marcos' AI Expert Assistant. What project idea do you have in mind?",
+                    "Interesting... Who is the target audience for this project?",
+                    "Understood. And which country or region will this operate in?",
+                    "Great! Based on this, I suggest we schedule a quick call with Marcos to finalize the strategy. You can reach him directly via WhatsApp below!"
+                ],
+                pt: [
+                    "Olá! Sou o Assistente Especialista do Marcos. Qual ideia de projeto você tem em mente?",
+                    "Interessante... Qual é o público-alvo deste projeto?",
+                    "Entendido. E em qual país ou região isso irá operar?",
+                    "Excelente! Com base nisso, sugiro agendarmos uma reunião rápida com o Marcos para fechar a estratégia. Você pode falar com ele agora pelo WhatsApp agora!"
+                ]
+            };
 
-        const toggleChat = () => {
-            chatWindow.classList.toggle('active');
-            if (chatWindow.classList.contains('active') && chatMessages.children.length === 0) {
-                setTimeout(() => addMessage(botMessages[getLang()][0], 'bot'), 500);
+            const toggleChat = () => {
+                chatWindow.classList.toggle('active');
+                if (chatWindow.classList.contains('active') && chatMessages.children.length === 0) {
+                    setTimeout(() => addMessage(botMessages[getLang()][0], 'bot'), 500);
+                }
+            };
+
+            window.openChat = () => {
+                if (!chatWindow.classList.contains('active')) {
+                    toggleChat();
+                }
+                chatInput.focus();
+            };
+
+            chatBtn.onclick = toggleChat;
+
+            function addMessage(text, side) {
+                const div = document.createElement('div');
+                div.className = `message ${side}`;
+                div.innerText = text;
+                chatMessages.appendChild(div);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
             }
-        };
 
-        const openChat = () => {
-            if (!chatWindow.classList.contains('active')) {
-                toggleChat();
+            chatSend.onclick = handleSend;
+            chatInput.onkeypress = (e) => e.key === 'Enter' && handleSend();
+
+            function handleSend() {
+                const lang = getLang();
+                const val = chatInput.value.trim();
+                if (!val) return;
+
+                addMessage(val, 'user');
+                chatInput.value = '';
+                chatStep++;
+
+                setTimeout(() => {
+                    if (chatStep < botMessages[lang].length) {
+                        addMessage(botMessages[lang][chatStep], 'bot');
+                        if (chatStep === botMessages[lang].length - 1) {
+                            const waLink = document.createElement('a');
+                            waLink.href = "https://wa.me/5592993426359";
+                            waLink.target = "_blank";
+                            waLink.className = "btn-primary block text-center mt-2 text-xs py-2 no-underline text-white font-bold rounded-lg bg-[#25D366]";
+                            waLink.style.display = "block";
+                            waLink.style.marginTop = "10px";
+                            waLink.innerText = lang === 'en' ? "Schedule on WhatsApp" : "Agendar no WhatsApp";
+                            chatMessages.appendChild(waLink);
+                            chatMessages.scrollTop = chatMessages.scrollHeight;
+                        }
+                    }
+                }, 1000);
             }
-            document.getElementById('chat-input').focus();
-        };
-
-        chatBtn.onclick = toggleChat;
+        });
 
         function getLang() { return document.body.getAttribute('lang-toggle') || 'en'; }
-
-        function addMessage(text, side) {
-            const div = document.createElement('div');
-            div.className = `message ${side}`;
-            div.innerText = text;
-            chatMessages.appendChild(div);
-            chatMessages.scrollTo({ top: chatMessages.scrollHeight, behavior: 'smooth' });
-        }
-
-        chatSend.onclick = handleSend;
-        document.getElementById('chat-input').onkeypress = (e) => e.key === 'Enter' && handleSend();
-
-        function handleSend() {
-            const lang = getLang();
-            const input = document.getElementById('chat-input');
-            const val = input.value.trim();
-            if (!val) return;
-
-            addMessage(val, 'user');
-            input.value = '';
-            chatStep++;
-
-            setTimeout(() => {
-                if (chatStep < botMessages[lang].length) {
-                    addMessage(botMessages[lang][chatStep], 'bot');
-                    if (chatStep === botMessages[lang].length - 1) {
-                        const waLink = document.createElement('a');
-                        waLink.href = "https://wa.me/5592993426359";
-                        waLink.target = "_blank";
-                        waLink.className = "btn-primary block text-center mt-2 text-xs py-2 no-underline text-white font-bold rounded-lg bg-[#25D366]";
-                        waLink.style.display = "block";
-                        waLink.style.marginTop = "10px";
-                        waLink.innerText = lang === 'en' ? "Schedule on WhatsApp" : "Agendar no WhatsApp";
-                        chatMessages.appendChild(waLink);
-                        chatMessages.scrollTo({ top: chatMessages.scrollHeight, behavior: 'smooth' });
-                    }
-                }
-            }, 1000);
-        }
     </script>
 </body>
 
