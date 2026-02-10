@@ -964,25 +964,58 @@
             }
         }
 
-        // --- Chat Bot Logic ---
+        // --- Chat Bot Logic (Expert Edition) ---
         const botMessages = {
-            en: [
-                "Hello! I am Marcos' AI Expert Assistant. What project idea do you have in mind?",
-                "Interesting... Who is the target audience for this project?",
-                "Understood. And which country or region will this operate in?",
-                "Great! Based on this, I suggest we schedule a quick call with Marcos to finalize the strategy. You can reach him directly via WhatsApp below!"
-            ],
-            pt: [
-                "Olá! Sou o Assistente Especialista do Marcos. Qual ideia de projeto você tem em mente?",
-                "Interessante... Qual é o público-alvo deste projeto?",
-                "Entendido. E em qual país ou região isso irá operar?",
-                "Excelente! Com base nisso, sugiro agendarmos uma reunião rápida com o Marcos para fechar a estratégia. Você pode falar com ele agora pelo WhatsApp agora!"
-            ]
+            en: {
+                welcome: "Hello! I am Marcos' AI Elite Assistant. I can consult on Web, SaaS, AI, Security, Cloud, or Mobile. What project or challenge do you have today?",
+                web: "A Global Web Presence! Marcos specializes in ultra-fast, high-conversion interfaces. For a successful launch, who is your target audience?",
+                saas: "Enterprise SaaS Architecture! We build robust, scalable backends for complex business logic. Who are the primary users of this system?",
+                ia: "Next-Gen AI Integration! Leveraging LLMs and Agents is the key to 10x ops. What specific workflow do you want to automate?",
+                security: "Security & Compliance First! We follow OWASP and GDPR/LGPD standards to protect your data. What is the main security concern for this project?",
+                mobile: "Mobile-First Strategy! We develop high-performance apps for iOS and Android. Which platform is your priority?",
+                cloud: "Cloud & Infrastructure! We design scalable architectures on AWS/Azure/Google Cloud. What is your expected user load?",
+                legacy: "Modernizing Legacy Systems! We help companies transition from old tech to modern stacks without data loss. What is the current stack you use?",
+                general: "I see! Innovation is the core of our work. To give you the best advice, who is the target audience for this project?",
+                region: "Understood. Strategic location is vital. In which country or region will this operate?",
+                closing: "Excellent analysis. I've mapped out the initial strategy based on your inputs. To finalize the technical roadmap with Marcos, I suggest a quick call. Use the link below to schedule via WhatsApp!"
+            },
+            pt: {
+                welcome: "Olá! Sou o Assistente de Elite do Marcos. Posso ajudar com Web, SaaS, IA, Segurança, Nuvem ou Mobile. Qual projeto ou desafio você tem hoje?",
+                web: "Presença Web Global! O Marcos é especialista em interfaces ultra-rápidas e de alta conversão. Para um lançamento de sucesso, quem é seu público-alvo?",
+                saas: "Arquitetura SaaS Empresarial! Construímos backends robustos e escaláveis para lógicas complexas. Quem serão os usuários principais deste sistema?",
+                ia: "Integração de IA de Próxima Geração! Usar LLMs e Agentes é a chave para escalar 10x. Qual fluxo específico você deseja automatizar?",
+                security: "Segurança e Compliance! Seguimos padrões OWASP e GDPR/LGPD para blindar seus dados. Qual a principal preocupação de segurança deste projeto?",
+                mobile: "Estratégia Mobile-First! Desenvolvemos apps de alta performance para iOS e Android. Qual plataforma é sua prioridade?",
+                cloud: "Nuvem e Infraestrutura! Desenhamos arquiteturas escaláveis na AWS/Azure/Google Cloud. Qual a carga de usuários esperada?",
+                legacy: "Modernização de Sistemas Legados! Ajudamos empresas na transição de tecnologias antigas para stacks modernos sem perda de dados. Qual stack você usa hoje?",
+                general: "Entendido! Inovação é a essência do nosso trabalho. Para eu te dar o melhor conselho, quem é o público-alvo deste projeto?",
+                region: "Compreendido. A localização estratégica é vital. Em qual país ou região isso irá operar?",
+                closing: "Excelente análise. Mapeei a estratégia inicial com base nos seus inputs. Para fecharmos o roadmap técnico com o Marcos, sugiro uma conversa rápida. Use o link abaixo para agendar via WhatsApp!"
+            }
+        };
+
+        const keywords = {
+            web: ['site', 'landing', 'página', 'frontend', 'design', 'animação', 'page', 'ui', 'ux', 'estilo', 'visual'],
+            saas: ['sistema', 'saas', 'plataforma', 'backend', 'banco', 'database', 'robusto', 'gestão', 'software', 'erp', 'crm'],
+            ia: ['ia', 'ai', 'agente', 'agent', 'bot', 'automação', 'inteligente', 'gpt', 'llm', 'automation', 'chat', 'chatbot'],
+            security: ['segurança', 'security', 'compliance', 'lgpd', 'gdpr', 'proteção', 'criptografia', 'hacker', 'pentest', 'vulnerabilidade', 'owasp'],
+            mobile: ['app', 'mobile', 'celular', 'ios', 'android', 'aplicativo', 'flutter', 'native'],
+            cloud: ['nuvem', 'cloud', 'aws', 'azure', 'google cloud', 'vps', 'hosting', 'servidor', 'server', 'devops', 'docker', 'kubernetes'],
+            legacy: ['antigo', 'legado', 'legacy', 'migração', 'atualizar', 'modernizar', 'velho', 'stack', 'cobol', 'php antigo', 'delphi']
         };
 
         let chatStep = 0;
+        let detectedService = 'general';
 
         function getLang() { return document.body.getAttribute('lang-toggle') || 'en'; }
+
+        function detectService(text) {
+            const lowText = text.toLowerCase();
+            for (const [service, keys] of Object.entries(keywords)) {
+                if (keys.some(key => lowText.includes(key))) return service;
+            }
+            return 'general';
+        }
 
         function addMessage(text, side) {
             const chatMessages = document.getElementById('chat-messages');
@@ -1001,7 +1034,7 @@
 
             win.classList.toggle('active');
             if (win.classList.contains('active') && msgs.children.length === 0) {
-                setTimeout(() => addMessage(botMessages[getLang()][0], 'bot'), 500);
+                setTimeout(() => addMessage(botMessages[getLang()].welcome, 'bot'), 500);
             }
         }
 
@@ -1034,25 +1067,34 @@
 
             addMessage(val, 'user');
             input.value = '';
-            chatStep++;
 
-            setTimeout(() => {
-                if (chatStep < botMessages[lang].length) {
-                    addMessage(botMessages[lang][chatStep], 'bot');
-                    if (chatStep === botMessages[lang].length - 1) {
-                        const chatMessages = document.getElementById('chat-messages');
-                        const waLink = document.createElement('a');
-                        waLink.href = "https://wa.me/5592993426359";
-                        waLink.target = "_blank";
-                        waLink.className = "btn-primary block text-center mt-2 text-xs py-2 no-underline text-white font-bold rounded-lg bg-[#25D366]";
-                        waLink.style.display = "block";
-                        waLink.style.marginTop = "10px";
-                        waLink.innerText = lang === 'en' ? "Schedule on WhatsApp" : "Agendar no WhatsApp";
-                        chatMessages.appendChild(waLink);
-                        chatMessages.scrollTop = chatMessages.scrollHeight;
-                    }
-                }
-            }, 1000);
+            if (chatStep === 0) {
+                detectedService = detectService(val);
+                chatStep++;
+                setTimeout(() => {
+                    addMessage(botMessages[lang][detectedService], 'bot');
+                }, 1000);
+            } else if (chatStep === 1) {
+                chatStep++;
+                setTimeout(() => {
+                    addMessage(botMessages[lang].region, 'bot');
+                }, 1000);
+            } else if (chatStep === 2) {
+                chatStep++;
+                setTimeout(() => {
+                    addMessage(botMessages[lang].closing, 'bot');
+                    const chatMessages = document.getElementById('chat-messages');
+                    const waLink = document.createElement('a');
+                    waLink.href = "https://wa.me/5592993426359";
+                    waLink.target = "_blank";
+                    waLink.className = "btn-primary block text-center mt-2 text-xs py-2 no-underline text-white font-bold rounded-lg bg-[#25D366]";
+                    waLink.style.display = "block";
+                    waLink.style.marginTop = "10px";
+                    waLink.innerText = lang === 'en' ? "Schedule on WhatsApp" : "Agendar no WhatsApp";
+                    chatMessages.appendChild(waLink);
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                }, 1000);
+            }
         }
     </script>
 </body>
