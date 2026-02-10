@@ -31,18 +31,10 @@
         content="Global Solutions Architect especializado em software seguro e escalável construído com IA. Expertise em conformidade com GDPR, LGPD e CCPA.">
     <meta property="twitter:image" content="assets/logo.png">
 
-    <!-- Tailwind CSS -->
+    <!-- Tailwind CSS (Play CDN) -->
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- AOS CSS -->
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-
-    <!-- Google Fonts: Inter -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-
-    <!-- Ícones Lucide -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-
+    <!-- Configuração do Tailwind -->
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -79,11 +71,96 @@
         }
     </script>
 
-    <!-- Estilos de Resgate (Funcionam sem Tailwind) -->
+    <!-- AOS CSS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Ícones Lucide -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Estilos de Resgate & Fallback (Garantem visual se o CDN falhar) -->
     <style>
+        :root {
+            --cyber-indigo: #6366f1;
+            --cyber-black: #050505;
+        }
+
         body {
-            background-color: #050505;
-            color: #e2e8f0;
+            background-color: var(--cyber-black) !important;
+            color: #e2e8f0 !important;
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .flex {
+            display: flex;
+        }
+
+        .items-center {
+            align-items: center;
+        }
+
+        .justify-between {
+            justify-content: space-between;
+        }
+
+        .grid {
+            display: grid;
+            gap: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            .md\:grid-cols-2 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .md\:grid-cols-3 {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .md\:flex {
+                display: flex;
+            }
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            background: rgba(5, 5, 5, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 50;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logo-img {
+            width: 48px;
+            height: 48px !important;
+            border-radius: 50%;
+            border: 2px solid var(--cyber-indigo);
+            object-fit: cover;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none !important;
+            transition: color 0.3s;
+        }
+
+        a:hover {
+            color: var(--cyber-indigo) !important;
         }
 
         [lang-toggle="pt"] .en {
@@ -94,13 +171,37 @@
             display: none !important;
         }
 
-        .logo-img {
-            max-width: 48px;
-            max-height: 48px;
-            border-radius: 9999px;
+        section {
+            padding: 6rem 0;
+            position: relative;
+        }
+
+        h1,
+        h2,
+        h3 {
+            color: white;
+            line-height: 1.2;
+            margin-top: 0;
+        }
+
+        .cyber-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-primary {
+            background: var(--cyber-indigo);
+            color: white;
+            padding: 0.75rem 2rem;
+            border-radius: 0.5rem;
+            font-weight: bold;
+            display: inline-block;
         }
     </style>
 
+    <!-- Estilos Avançados (Tailwind) -->
     <style type="text/tailwindcss">
         @layer base {
             body {
