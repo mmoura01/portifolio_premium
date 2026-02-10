@@ -621,7 +621,7 @@
                         Especialista em Compliance Internacional.</span>
                 </p>
                 <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-                    <a href="#contact" class="btn-primary">
+                    <a href="javascript:void(0)" onclick="openChat()" class="btn-primary">
                         <span class="en">Deploy My Project</span>
                         <span class="pt">Implantar meu Projeto</span>
                     </a>
@@ -782,6 +782,10 @@
                                     class="w-4 h-4 text-green-500"></i> <span class="en">Dynamic Animations</span><span
                                     class="pt">Animações Dinâmicas</span></li>
                         </ul>
+                        <button onclick="openChat()" class="btn-secondary w-full text-sm py-2">
+                            <span class="en">Quote Project</span>
+                            <span class="pt">Pedir Orçamento</span>
+                        </button>
                     </div>
                 </div>
 
@@ -808,6 +812,10 @@
                                     class="w-4 h-4 text-green-500"></i> <span class="en">Microservices
                                     Structure</span><span class="pt">Estrutura de Microserviços</span></li>
                         </ul>
+                        <button onclick="openChat()" class="btn-secondary w-full text-sm py-2">
+                            <span class="en">Quote Project</span>
+                            <span class="pt">Pedir Orçamento</span>
+                        </button>
                     </div>
                 </div>
 
@@ -834,6 +842,10 @@
                                     class="w-4 h-4 text-green-500"></i> <span class="en">LLM Integration</span><span
                                     class="pt">Integração com LLM</span></li>
                         </ul>
+                        <button onclick="openChat()" class="btn-secondary w-full text-sm py-2">
+                            <span class="en">Get Started</span>
+                            <span class="pt">Começar Agora</span>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -894,8 +906,7 @@
                 <!-- Messages go here -->
             </div>
             <div class="chat-input-area">
-                <input type="text" id="chat-input" placeholder="Type your idea..." class="en">
-                <input type="text" id="chat-input-pt" placeholder="Digite sua ideia..." class="pt hidden">
+                <input type="text" id="chat-input" placeholder="Type your idea..." class="w-full">
                 <button id="chat-send">
                     <i data-lucide="send" class="w-4 h-4"></i>
                 </button>
@@ -920,15 +931,10 @@
         function setLang(lang) {
             document.body.setAttribute('lang-toggle', lang);
 
-            // Alternar placeholders do chat
-            const inputEn = document.getElementById('chat-input');
-            const inputPt = document.getElementById('chat-input-pt');
-            if (lang === 'pt') {
-                inputEn.classList.add('hidden');
-                inputPt.classList.remove('hidden');
-            } else {
-                inputEn.classList.remove('hidden');
-                inputPt.classList.add('hidden');
+            // Atualizar placeholder do chat
+            const chatInput = document.getElementById('chat-input');
+            if (chatInput) {
+                chatInput.placeholder = (lang === 'pt') ? "Digite sua ideia..." : "Type your idea...";
             }
 
             // Alternar Botões da UI
@@ -966,12 +972,21 @@
             ]
         };
 
-        chatBtn.onclick = () => {
+        const toggleChat = () => {
             chatWindow.classList.toggle('active');
-            if (chatMessages.children.length === 0) {
+            if (chatWindow.classList.contains('active') && chatMessages.children.length === 0) {
                 setTimeout(() => addMessage(botMessages[getLang()][0], 'bot'), 500);
             }
         };
+
+        const openChat = () => {
+            if (!chatWindow.classList.contains('active')) {
+                toggleChat();
+            }
+            document.getElementById('chat-input').focus();
+        };
+
+        chatBtn.onclick = toggleChat;
 
         function getLang() { return document.body.getAttribute('lang-toggle') || 'en'; }
 
@@ -985,11 +1000,10 @@
 
         chatSend.onclick = handleSend;
         document.getElementById('chat-input').onkeypress = (e) => e.key === 'Enter' && handleSend();
-        document.getElementById('chat-input-pt').onkeypress = (e) => e.key === 'Enter' && handleSend();
 
         function handleSend() {
             const lang = getLang();
-            const input = lang === 'en' ? document.getElementById('chat-input') : document.getElementById('chat-input-pt');
+            const input = document.getElementById('chat-input');
             const val = input.value.trim();
             if (!val) return;
 
