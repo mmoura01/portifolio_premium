@@ -80,22 +80,35 @@
     <!-- Ícones Lucide -->
     <script src="https://unpkg.com/lucide@latest"></script>
 
-    <!-- Estilos de Resgate & Fallback (Garantem visual se o CDN falhar) -->
+    <!-- CSS Nativo "Cyber-Premium" (Independente de Frameworks) -->
     <style>
+        /* Variáveis de Design */
         :root {
             --cyber-indigo: #6366f1;
             --cyber-black: #050505;
+            --cyber-dark: #0a0a0a;
+            --cyber-silver: #e2e8f0;
+            --glass: rgba(255, 255, 255, 0.05);
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Base & Reset */
+        * {
+            box-sizing: border-box;
         }
 
         body {
             background-color: var(--cyber-black) !important;
-            color: #e2e8f0 !important;
+            color: var(--cyber-silver) !important;
             font-family: 'Inter', sans-serif;
             margin: 0;
             overflow-x: hidden;
+            line-height: 1.5;
         }
 
+        /* Layout System */
         .container {
+            width: 100%;
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 1.5rem;
@@ -103,6 +116,11 @@
 
         .flex {
             display: flex;
+        }
+
+        .grid {
+            display: grid;
+            gap: 2rem;
         }
 
         .items-center {
@@ -113,9 +131,24 @@
             justify-content: space-between;
         }
 
-        .grid {
-            display: grid;
-            gap: 2rem;
+        .justify-center {
+            justify-content: center;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .space-x-3>*+* {
+            margin-left: 0.75rem;
+        }
+
+        .space-x-8>*+* {
+            margin-left: 2rem;
+        }
+
+        .space-y-6>*+* {
+            margin-top: 1.5rem;
         }
 
         @media (min-width: 768px) {
@@ -127,42 +160,189 @@
                 grid-template-columns: repeat(3, 1fr);
             }
 
+            .md\:text-left {
+                text-align: left;
+            }
+
             .md\:flex {
                 display: flex;
             }
         }
 
+        /* Header & Navigation */
         header {
             position: fixed;
             top: 0;
+            left: 0;
             width: 100%;
+            z-index: 100;
+            background: rgba(5, 5, 5, 0.8);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--border);
             height: 80px;
             display: flex;
             align-items: center;
-            background: rgba(5, 5, 5, 0.8);
-            backdrop-filter: blur(10px);
-            z-index: 50;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+        }
+
+        nav a {
+            color: var(--cyber-silver);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        nav a:hover {
+            color: var(--cyber-indigo);
+            text-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
+        }
+
+        /* Branding */
+        .logo-container {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: 2px solid var(--cyber-indigo);
+            padding: 2px;
+            overflow: hidden;
         }
 
         .logo-img {
-            width: 48px;
-            height: 48px !important;
-            border-radius: 50%;
-            border: 2px solid var(--cyber-indigo);
+            width: 100%;
+            height: 100%;
             object-fit: cover;
+            border-radius: 50%;
         }
 
-        a {
-            color: inherit;
-            text-decoration: none !important;
-            transition: color 0.3s;
+        .brand-name {
+            font-weight: 800;
+            font-size: 1.25rem;
+            letter-spacing: -0.05em;
+            color: white;
         }
 
-        a:hover {
-            color: var(--cyber-indigo) !important;
+        /* Typography & Visual Effects */
+        h1,
+        h2,
+        h3 {
+            color: white;
+            margin: 0;
+            font-weight: 800;
         }
 
+        .gradient-text {
+            background: linear-gradient(90deg, var(--cyber-indigo), #a5b4fc);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+        }
+
+        /* Buttons */
+        .btn-primary {
+            background: var(--cyber-indigo);
+            color: white;
+            padding: 0.85rem 2.5rem;
+            border-radius: 0.5rem;
+            font-weight: 700;
+            display: inline-block;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.6);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            padding: 0.85rem 2rem;
+            border-radius: 0.5rem;
+            font-weight: 700;
+            display: inline-block;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: var(--glass);
+            border-color: white;
+        }
+
+        /* Sections & Cards */
+        section {
+            padding: 8rem 0;
+            width: 100%;
+        }
+
+        .cyber-card {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            padding: 2.5rem;
+            border-radius: 1.5rem;
+            transition: all 0.5s ease;
+        }
+
+        .cyber-card:hover {
+            border-color: rgba(99, 102, 241, 0.5);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        /* Language Switcher */
+        .lang-switcher {
+            background: var(--glass);
+            padding: 4px;
+            border-radius: 999px;
+            border: 1px solid var(--border);
+            gap: 0.5rem;
+        }
+
+        .lang-btn {
+            border: none;
+            background: transparent;
+            color: #666;
+            padding: 4px 12px;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .lang-btn.active {
+            background: var(--cyber-indigo);
+            color: white;
+        }
+
+        /* Trust Bar */
+        .trust-bar {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            opacity: 0.6;
+            padding: 2rem 0;
+        }
+
+        .trust-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 700;
+            font-size: 0.85rem;
+        }
+
+        /* Multi-language toggler logic */
         [lang-toggle="pt"] .en {
             display: none !important;
         }
@@ -171,59 +351,35 @@
             display: none !important;
         }
 
-        section {
-            padding: 6rem 0;
-            position: relative;
+        /* Animations */
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
         }
 
-        h1,
-        h2,
-        h3 {
-            color: white;
-            line-height: 1.2;
-            margin-top: 0;
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
         }
 
-        .cyber-card {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 2rem;
-            border-radius: 1rem;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+        @keyframes glow {
+            0% {
+                box-shadow: 0 0 5px rgba(99, 102, 241, 0.2);
+            }
+
+            100% {
+                box-shadow: 0 0 20px rgba(99, 102, 241, 0.6);
+            }
         }
 
-        .btn-primary {
-            background: var(--cyber-indigo);
-            color: white;
-            padding: 0.75rem 2rem;
-            border-radius: 0.5rem;
-            font-weight: bold;
-            display: inline-block;
-        }
-    </style>
-
-    <!-- Estilos Avançados (Tailwind) -->
-    <style type="text/tailwindcss">
-        @layer base {
-            body {
-                @apply bg-cyber-black text-silver font-inter overflow-x-hidden;
-            }
-        }
-        @layer components {
-            .glass {
-                @apply bg-white/5 backdrop-blur-lg border border-white/10;
-            }
-            .btn-primary {
-                @apply px-8 py-3 bg-cyber-indigo text-white font-bold rounded-lg transition-all hover:bg-indigo-500 hover:shadow-[0_0_20px_rgba(99,102,241,0.5)] active:scale-95;
-            }
-            .btn-secondary {
-                @apply px-8 py-3 border border-white/20 text-white font-bold rounded-lg transition-all hover:bg-white/10 active:scale-95;
-            }
-            .cyber-card {
-                @apply glass p-8 rounded-2xl transition-all duration-500 hover:border-cyber-indigo/50 hover:bg-white/10;
-            }
-            .gradient-text {
-                @apply bg-clip-text text-transparent bg-gradient-to-r from-cyber-indigo to-indigo-300;
-            }
+        .animate-glow {
+            animation: glow 3s infinite alternate;
         }
     </style>
 </head>
@@ -234,12 +390,11 @@
     <header class="fixed top-0 w-full z-50 glass border-b border-white/5">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
             <div class="flex items-center space-x-3">
-                <div class="w-12 h-12 rounded-full border-2 border-cyber-indigo p-0.5 group">
+                <div class="logo-container group">
                     <img src="assets/logo.png" alt="MM Logo"
-                        class="logo-img w-full h-full object-cover rounded-full transition-transform duration-500 group-hover:scale-110">
+                        class="logo-img transition-transform duration-500 group-hover:scale-110">
                 </div>
-                <span class="text-xl font-extrabold tracking-tighter text-white whitespace-nowrap">MARCO<span
-                        class="text-cyber-indigo">
+                <span class="brand-name whitespace-nowrap">MARCO<span class="text-cyber-indigo">
                         M.</span></span>
             </div>
 
@@ -251,11 +406,9 @@
                 <a href="#compliance" class="hover:text-cyber-indigo transition-colors en">Trust</a>
                 <a href="#compliance" class="hover:text-cyber-indigo transition-colors pt">Confiança</a>
 
-                <div class="flex items-center space-x-2 bg-white/5 p-1 rounded-full border border-white/10">
-                    <button onclick="setLang('en')" id="btn-en"
-                        class="px-3 py-1 rounded-full text-xs font-bold transition-all bg-cyber-indigo text-white">EN</button>
-                    <button onclick="setLang('pt')" id="btn-pt"
-                        class="px-3 py-1 rounded-full text-xs font-bold transition-all text-gray-500 hover:text-white">PT</button>
+                <div class="lang-switcher">
+                    <button onclick="setLang('en')" id="btn-en" class="lang-btn active">EN</button>
+                    <button onclick="setLang('pt')" id="btn-pt" class="lang-btn">PT</button>
                 </div>
             </nav>
 
@@ -324,24 +477,23 @@
     <!-- Barra de Confiança / Compliance -->
     <section id="compliance" class="py-12 bg-white/5 border-y border-white/5">
         <div class="container mx-auto px-6">
-            <div
-                class="flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-50 grayscale hover:grayscale-0 transition-all duration-700">
-                <div class="flex items-center space-x-2">
+            <div class="trust-bar grayscale hover:grayscale-0 transition-all duration-700">
+                <div class="trust-item">
                     <i data-lucide="lock" class="w-6 h-6"></i>
-                    <span class="font-bold">SSL SECURE</span>
+                    <span>SSL SECURE</span>
                 </div>
-                <div class="flex items-center space-x-2">
-                    <span class="font-bold border px-2 py-0.5 rounded text-xs border-white/20">GDPR</span>
+                <div class="trust-item">
+                    <span class="border px-2 py-0.5 rounded text-xs border-white/20">GDPR</span>
                     <span class="en text-xs">COMPLIANT</span>
                     <span class="pt text-xs">CONFORME</span>
                 </div>
-                <div class="flex items-center space-x-2">
-                    <span class="font-bold border px-2 py-0.5 rounded text-xs border-white/20">LGPD</span>
+                <div class="trust-item">
+                    <span class="border px-2 py-0.5 rounded text-xs border-white/20">LGPD</span>
                     <span class="en text-xs">VERIFIED</span>
                     <span class="pt text-xs">VERIFICADO</span>
                 </div>
-                <div class="flex items-center space-x-2">
-                    <span class="font-bold border px-2 py-0.5 rounded text-xs border-white/20">OWASP</span>
+                <div class="trust-item">
+                    <span class="border px-2 py-0.5 rounded text-xs border-white/20">OWASP</span>
                     <span class="en text-xs">TOP 10 READY</span>
                     <span class="pt text-xs">TOP 10 PRONTO</span>
                 </div>
@@ -537,15 +689,11 @@
             const btnPt = document.getElementById('btn-pt');
 
             if (lang === 'en') {
-                btnEn.classList.add('bg-cyber-indigo', 'text-white');
-                btnEn.classList.remove('text-gray-500');
-                btnPt.classList.remove('bg-cyber-indigo', 'text-white');
-                btnPt.classList.add('text-gray-500');
+                btnEn.classList.add('active');
+                btnPt.classList.remove('active');
             } else {
-                btnPt.classList.add('bg-cyber-indigo', 'text-white');
-                btnPt.classList.remove('text-gray-500');
-                btnEn.classList.remove('bg-cyber-indigo', 'text-white');
-                btnEn.classList.add('text-gray-500');
+                btnPt.classList.add('active');
+                btnEn.classList.remove('active');
             }
         }
     </script>
